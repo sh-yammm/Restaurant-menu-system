@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Update Price{% endblock %}
+
+{% block content %}
+<style>
+  .form-container {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .form-header h2 {
+    font-weight: 600;
+  }
+  .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+  }
+  button, .btn {
+    border-radius: 6px;
+  }
+</style>
+
+<div class="form-container">
+  <div class="form-header">
+    <h2>💰 Update Price</h2>
+  </div>
+
+  <form method="post" class="card">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex justify-content-between mt-3">
+      <button type="submit" class="btn btn-success">💾 Update</button>
+      <a href="{% url 'menu_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

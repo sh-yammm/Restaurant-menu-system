@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ menu.name }}{% endblock %}
+
+{% block content %}
+<style>
+  .menu-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .menu-header h1 {
+    font-weight: 600;
+  }
+  .menu-header p {
+    color: #6c757d;
+  }
+  .menu-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+  .menu-card:hover {
+    transform: translateY(-3px);
+  }
+  .menu-icon {
+    font-size: 20px;
+    margin-left: 5px;
+  }
+</style>
+
+<div class="menu-header">
+  <h1>{{ menu.name }}</h1>
+  <p>{{ menu.description }}</p>
+  <a href="{% url 'menuitem_add' %}" class="btn btn-success">➕ Add Item</a>
+</div>
+
+<div class="row g-3">
+  {% for item in items %}
+    <div class="col-md-4">
+      <div class="card menu-card p-3">
+        <h5 class="card-title">{{ item.name }}
+          {% if item.is_vegetarian %}
+            <span class="menu-icon">🥦</span>
+          {% else %}
+            <span class="menu-icon">🍖</span>
+          {% endif %}
+        </h5>
+        <p class="text-success fw-bold">₹{{ item.price }}</p>
+        <a href="{% url 'menuitem_update_price' item.id %}" class="btn btn-outline-primary btn-sm">Update Price</a>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted text-center">No items in this menu yet.</p>
+  {% endfor %}
+</div>
+
+<div class="text-center mt-4">
+  <a href="{% url 'menu_list' %}" class="btn btn-secondary">⬅ Back to Menus</a>
+</div>
+{% endblock %}

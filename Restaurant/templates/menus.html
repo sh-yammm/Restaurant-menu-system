@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurant Menus{% endblock %}
+
+{% block content %}
+<div class="menu-container">
+  <h1 class="page-title">📜 Restaurant Menus</h1>
+
+  {% for menu in menus %}
+    <div class="menu-card">
+      <div class="menu-header">
+        <h2>{{ menu.name }}</h2>
+        <span class="menu-id">#{{ menu.id }}</span>
+      </div>
+
+      <p class="menu-description">{{ menu.description }}</p>
+
+      <h3>🍽 Items</h3>
+      <ul class="menu-items">
+        {% for item in menu.items.all %}
+          <li>
+            <div class="item-info">
+              <strong>{{ item.name }}</strong> – ₹{{ item.price }}
+              {% if item.is_vegetarian %} 🥦{% else %} 🍖{% endif %}
+            </div>
+            <a href="{% url 'menuitem_update_price' item.id %}" class="btn-outline">Update</a>
+          </li>
+        {% empty %}
+          <li class="empty">No items added yet.</li>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'menu_detail' menu.id %}" class="btn-primary">View Full Menu</a>
+    </div>
+  {% empty %}
+    <p class="no-menus">No menus available at the moment.</p>
+  {% endfor %}
+</div>
+{% endblock %}
